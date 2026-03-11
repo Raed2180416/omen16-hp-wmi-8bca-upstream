@@ -1,0 +1,44 @@
+From d31f0a948da90490d0142f99100b617b1a73abbb Mon Sep 17 00:00:00 2001
+From: Raed <thisisraed@outlook.com>
+Date: Wed, 11 Mar 2026 17:20:01 +0530
+Subject: [PATCH] platform/x86: hp-wmi: Add Omen 16-xf0xxx (8BCA) support
+
+The HP Omen 16-xf0xxx board 8BCA uses the same Victus-S fan and
+thermal WMI path as other recently supported Omen/Victus boards,
+but it requires Omen v1 thermal profile parameters for correct
+platform profile behavior.
+
+Add board 8BCA to victus_s_thermal_profile_boards[] and map it
+to omen_v1_thermal_params.
+
+Validated on HP Omen 16-xf0xxx (board 8BCA):
+- /sys/firmware/acpi/platform_profile exposes
+	low-power/balanced/performance
+- fan RPM reporting works (fan1_input/fan2_input)
+- manual fan control works through hp-wmi hwmon (pwm1/pwm1_enable)
+
+Signed-off-by: Raed <thisisraed@outlook.com>
+---
+ drivers/platform/x86/hp/hp-wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 68ede7e57..6de701762 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -187,6 +187,10 @@ static const struct dmi_system_id victus_s_thermal_profile_boards[] __initconst
+ 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BCD") },
+ 		.driver_data = (void *)&omen_v1_thermal_params,
+ 	},
++	{
++		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BCA") },
++		.driver_data = (void *)&omen_v1_thermal_params,
++	},
+ 	{
+ 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BD4") },
+ 		.driver_data = (void *)&victus_s_thermal_params,
+
+base-commit: b29fb8829bff243512bb8c8908fd39406f9fd4c3
+-- 
+2.52.0
+
