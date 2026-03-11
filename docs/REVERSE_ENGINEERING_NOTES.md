@@ -47,8 +47,3 @@ The currently exposed interface is **shared control**, not independent per-fan c
 
 Therefore UI/policy should model one manual fan target + two telemetry channels.
 
-## About Windows Omen Gaming Hub (MSIX)
-
-This repository does **not** include proprietary MSIX contents.
-
-What is represented here is the validated Linux-side result and the inferred query-level behavior that was reproduced on hardware. If additional public-safe artifacts are added later, they should be listed explicitly with hash/time provenance.
